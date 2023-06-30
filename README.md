@@ -1,5 +1,6 @@
 # The Challenge
 
+### why
 Mix different abilities to retrieve information from the web (webscraping), api and cross check the information for better organisation.
 
 I wanted to create a fun little challenge to help me get the most from a game, Civilisation 6, a get most of the achivement that we can get in the game.
