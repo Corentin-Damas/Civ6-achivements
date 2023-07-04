@@ -21,7 +21,7 @@ else:
     if upDate == ('yes' or 'y'):
         get_game_data() ## Update Achievement Datas
 
-# Read the Datas
+# Read and UPDATE Datas
 with open("game_data.json") as openfile:
     data = json.load(openfile)
 
@@ -32,8 +32,9 @@ df_full = pd.json_normalize(data_achievement) # Refactor json to pd dataframe
 df_steam = df_full.drop(columns=["apiname", "unlocktime"]) # Only keep "achieved, name, description" cols
 
 # ------ Get All Civilization Datas from Civ 6 wiki ------
+
 ## Make sur to get the Civilization datas exist
-file_leader = 'leaderTable.csv'
+file_leader = 'leaderTable.json'
 full_path_leader = os.path.join(file_path, file_leader)
 if not os.path.isfile(full_path_leader):
     getGeneralLeaderInfo()
@@ -43,38 +44,27 @@ if not os.path.isfile(full_path_leader):
 # Get scenario base and map base
 
 # -------------- Join the tables --------------------
-df_Civ = pd.read_csv('leaderTable.csv')
-print("Steam info: ",df_steam.columns)
-print("Civ info:",df_Civ.columns)
+with open("leaderTable.json") as file:
+    leader_data = json.load(file)
+    for index, row in df_steam.iterrows():
+        for civ in leader_data:
+            temp = enumerate(civ["achievements"]) # will create a liste of tuple ( index, achievement) so we can update the achievement datas
+            for idx, achi in temp:
+                if achi == row["name"]:
+                    civ["achievements"][idx] = {achi: row["description"], "achived": row['achieved'] }
 
+    json.dump(leader_data, file)
 
-# for index, row in df_steam.iterrows():
-#     for idx,r in df_Civ.iterrows():
-#         print( r['achievements'][0])
-#         for item in r['achievements']:
-#             print(item)
-#             print(r['achievements'][item])
-#             if r['achievements'][item] == row["name"]:
-#                 row['civ'] = (df_Civ['Leader'][idx], df_Civ["Civilization"][idx])
-#                 print("found")
-
-# BUG When taking back a CSV file with an array inside the array will be transform into a string '[...]'
-# Witch will break the logic/  change the file type
-
-# joined_db = "joined_db.csv"
-# joined_db_path = os.path.join(file_path, joined_db)
-# df_steam.to_csv(joined_db_path, index=False)
+# --------------- Create the "to achieve file" -----------------
 
 
 
-##Join the table on the achivement name
-
-### TO DO
 
 
+
+### Bonus challenge
 ## [df New Columns 'conditions'] for an achivement some elements might be in the game (artist / wonder)
 ## for each condition (hyper-link) add this element to the condition columns
 ## if [no leader put 'Other'// Latter will add a Scenario / Map / difficulty ]
-
 ## for scenario based achivement
 ## Go to "https://civilization.fandom.com/wiki/List_of_scenarios_in_Civ6" and for each link a  new column with (0/1)

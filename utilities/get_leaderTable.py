@@ -18,7 +18,7 @@ def getGeneralLeaderInfo():
 
     # Save the Table
     file_path = os.path.dirname(__file__)
-    file_name = "../leaderTable.csv"
+    file_name = "leaderScrape.csv"
     full_path = os.path.join(file_path, file_name)
 
     leaderTable_filter.to_csv(full_path, index=False)
