@@ -40,11 +40,9 @@ if not os.path.isfile(full_path_leader):
     getGeneralLeaderInfo()
     getAchievements()
 
-
-# Get scenario base and map base
-
 # -------------- Join the tables --------------------
-with open("leaderTable.json") as file:
+## Read
+with open("leaderTable.json","r") as file:
     leader_data = json.load(file)
     for index, row in df_steam.iterrows():
         for civ in leader_data:
@@ -52,8 +50,11 @@ with open("leaderTable.json") as file:
             for idx, achi in temp:
                 if achi == row["name"]:
                     civ["achievements"][idx] = {achi: row["description"], "achived": row['achieved'] }
+    print(leader_data)
 
-    json.dump(leader_data, file)
+## Write
+with open("leaderTable.json", "w") as f:
+    json.dump(leader_data, f)
 
 # --------------- Create the "to achieve file" -----------------
 
