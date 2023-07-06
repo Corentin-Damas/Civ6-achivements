@@ -12,7 +12,17 @@ However it's not really possible to organise the one that we already have, witch
 
 By crossing this two data we can possibly have a better picture of what we can do to get the most of the game in a shorter time.
 
+### Challenge:
+
+Add a GUI where we can see what's left to do, and generate a random achivement to do 
+
+
+
 ## The game
 "Civilization VI is a turn-based strategy video game in which one or more players compete alongside computer-controlled AI opponents to grow their individual civilization from a small tribe to control of the entire planet across several periods of development. "
 src: wikipedia
 
+### Stat of the script 
+- Base Scipt: done 
+- Refactoring : in progress
+- Gui : ...

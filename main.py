@@ -4,6 +4,7 @@ import os
 from utilities.steam_api import get_game_data
 from utilities.get_leaderTable import  getGeneralLeaderInfo
 from utilities.get_Achievements import getAchievements
+from utilities.get_to_do_list import getToDoList
 import pandas as pd
 
 file_path = os.path.dirname(__file__)
@@ -49,23 +50,21 @@ with open("leaderTable.json","r") as file:
             temp = enumerate(civ["achievements"]) # will create a liste of tuple ( index, achievement) so we can update the achievement datas
             for idx, achi in temp:
                 if achi == row["name"]:
-                    civ["achievements"][idx] = {achi: row["description"], "achived": row['achieved'] }
+                    civ["achievements"][idx] = {achi: row["description"], "achived": row['achieved']}
     print(leader_data)
 
 ## Write
-with open("leaderTable.json", "w") as f:
-    json.dump(leader_data, f)
+# with open("leaderTable.json", "w") as f:
+#     json.dump(leader_data, f)
 
 # --------------- Create the "to achieve file" -----------------
-
+getToDoList()
 
 
 
 
 
 ### Bonus challenge
-## [df New Columns 'conditions'] for an achivement some elements might be in the game (artist / wonder)
-## for each condition (hyper-link) add this element to the condition columns
-## if [no leader put 'Other'// Latter will add a Scenario / Map / difficulty ]
+# add a Scenario / Map achievements
 ## for scenario based achivement
 ## Go to "https://civilization.fandom.com/wiki/List_of_scenarios_in_Civ6" and for each link a  new column with (0/1)
